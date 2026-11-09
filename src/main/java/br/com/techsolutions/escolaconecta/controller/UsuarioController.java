@@ -1,5 +1,6 @@
 package br.com.techsolutions.escolaconecta.controller;
 
+import br.com.techsolutions.escolaconecta.dto.usuario.UsuarioResponseDTO;
 import br.com.techsolutions.escolaconecta.model.Chamado;
 import br.com.techsolutions.escolaconecta.model.Usuario;
 import br.com.techsolutions.escolaconecta.service.UsuarioService;
@@ -33,7 +34,7 @@ public List<Usuario> listar(){
 }
 
 @GetMapping("/usuarios/{id}")
-public Usuario buscarPorId(@PathVariable Long id){return usuarioService.buscarPorId(id);
+public UsuarioResponseDTO buscarPorId(@PathVariable Long id){return usuarioService.buscarPorId(id);
     }
 
 }

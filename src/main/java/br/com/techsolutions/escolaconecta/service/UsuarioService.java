@@ -1,5 +1,6 @@
 package br.com.techsolutions.escolaconecta.service;
 
+import br.com.techsolutions.escolaconecta.dto.usuario.UsuarioResponseDTO;
 import br.com.techsolutions.escolaconecta.exception.RecursoNaoEncontradoException;
 import br.com.techsolutions.escolaconecta.model.Chamado;
 import br.com.techsolutions.escolaconecta.model.Usuario;
@@ -17,6 +18,15 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    private UsuarioResponseDTO converterParaDTO(Usuario usuario){
+        return new UsuarioResponseDTO(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail(),
+                usuario.isAtivo()
+        );
+    }
+
     public Usuario cadastrar(Usuario usuario){
 
         if (usuario.getNome() == null || usuario.getNome().isBlank()){
@@ -30,9 +40,16 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario buscarPorId(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(
+    public UsuarioResponseDTO buscarPorId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(
                 "Usuario não encontrado"));
+        return converterParaDTO(usuario);
     }
+
+    public boolean excluir(Long id){
+        if(!usuarioRepository.existsById(id)){}
+            return false;
+    }
+
 
 }
